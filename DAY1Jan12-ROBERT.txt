@@ -1,6 +1,6 @@
 !@@@CORE SWITCH SA TAAS
 config t
-   hostname COREtaas_
+   hostname COREtaas42
    enable secret pass
    service password-encryption
    no logging console
@@ -15,25 +15,25 @@ config t
       exec-timeout 0 0
    Int Vlan 1
      no shutdown
-	 ip add 10._.1.2 255.255.255.0
+	 ip add 10.42.1.2 255.255.255.0
 	 description MGMTDATA
    Int Vlan 10
      no shutdown
-	 ip add 10._.10.2 255.255.255.0
+	 ip add 10.42.10.2 255.255.255.0
 	 description WIRELESS
    Int Vlan 50
      no shutdown
-	 ip add 10._.50.2 255.255.255.0
+	 ip add 10.42.50.2 255.255.255.0
 	 description IPCCTV
    Int Vlan 100
      no shutdown
-	 ip add 10._.100.2 255.255.255.0
+	 ip add 10.42.100.2 255.255.255.0
 	 description VOICEVLAN
 
 !!!DAPAT 7 UNDER SCORE ANG NA EDIT MO  ( LINE 34 to 68 PASTE TO COREBABA SWITCH )
 !@@@LeafSwitchONLY
 config t
-   hostname COREbaba_
+   hostname COREbaba42
    enable secret pass
    service password-encryption
    no logging console
@@ -49,53 +49,54 @@ config t
    Int Gi 0/1
      no shutdown
 	  no switchport
-	  ip add 10._._.4 255.255.255.0
+	  ip add 10.42.42.4 255.255.255.0
    Int Vlan 1
      no shutdown
-	 ip add 10._.1.4 255.255.255.0
+	 ip add 10.42.1.4 255.255.255.0
 	 description MGMTDATA
    Int Vlan 10
      no shutdown
-	 ip add 10._.10.4 255.255.255.0
+	 ip add 10.42.10.4 255.255.255.0
 	 description WIRELESS
    Int Vlan 50
      no shutdown
-	 ip add 10._.50.4 255.255.255.0
+	 ip add 10.42.50.4 255.255.255.0
 	 description IPCCTV
    Int Vlan 100
      no shutdown
-	 ip add 10._.100.4 255.255.255.0
+	 ip add 10.42.100.4 255.255.255.0
 	 description VOICEVLAN
-	 
+end
+
 !DHCP: DYNAMIC HOST CONFIGURATION PROTOCOL
 !!!DAPAT 21 UNDER SCORE ANG NA EDIT MO  ( LINE 72 to 99 PASTE TO COREBABA SWITCH )
 !@@@LEAF SWITCH
 config t
-ip dhcp Excluded-add 10._.1.1 10._.1.100
-ip dhcp Excluded-add 10._.10.1 10._.10.100
-ip dhcp Excluded-add 10._.50.1 10._.50.100
-ip dhcp Excluded-add 10._.100.1 10._.100.100
+ip dhcp Excluded-add 10.42.1.1 10.42.1.100
+ip dhcp Excluded-add 10.42.10.1 10.42.10.100
+ip dhcp Excluded-add 10.42.50.1 10.42.50.100
+ip dhcp Excluded-add 10.42.100.1 10.42.100.100
 ip dhcp pool MGMTDATA
-   network 10._.1.0 255.255.255.0
-   default-router 10._.1.4
+   network 10.42.1.0 255.255.255.0
+   default-router 10.42.1.4
    domain-name MGMTDATA.COM
-   dns-server 10._.1.10
+   dns-server 10.42.1.10
 ip dhcp pool WIFIDATA
-   network 10._.10.0 255.255.255.0
-   default-router 10._.10.4
+   network 10.42.10.0 255.255.255.0
+   default-router 10.42.10.4
    domain-name WIFIDATA.COM
-   dns-server 10._.1.10
+   dns-server 10.42.1.10
 ip dhcp pool IPCCTV
-   network 10._.50.0 255.255.255.0
-   default-router 10._.50.4
+   network 10.42.50.0 255.255.255.0
+   default-router 10.42.50.4
    domain-name IPCCTV.COM
-   dns-server 10._.1.10
+   dns-server 10.42.1.10
 ip dhcp pool VOICEVLAN
-   network 10._.100.0 255.255.255.0
-   default-router 10._.100.4
+   network 10.42.100.0 255.255.255.0
+   default-router 10.42.100.4
    domain-name VOICEVLAN.COM
-   dns-server 10._.1.10
-   option 150 ip 10._.100.8   
+   dns-server 10.42.1.10
+   option 150 ip 10.42.100.8   
    END
 
 !!CREATING AND PLACING PORTS INSIDEAVLAN:
@@ -137,23 +138,23 @@ Int Fa 0/7
   switchport mode access
   switchport voice vlan 100 
   mls qos trust device cisco-phone 
- switchoprt access vlan 1
+ switchport access vlan 1
  end
 
 !IP CAMERAS NEED MAC ADDRESS RESERVATION FOR FIXED IP  (LINE 144 to 151 PASTE TO COREBABA)
 config t
 ip routing
 ip dhcp pool CAMERA6
-host 10._.50.6 255.255.255.0
-client-identifier ____.____.____
+host 10.42.50.6 255.255.255.0
+client-identifier 001a.0709.c232
 ip dhcp pool CAMERA8
-host 10._.50.8 255.255.255.0
-client-identifier ____.____.____
+host 10.42.50.8 255.255.255.0
+client-identifier 001a.070a.24ef
 
 !!cisco unified call manager Express command
 !@@@CUCM-M
 config t
-   hostname CUCM-_
+   hostname CUCM-42
    enable secret pass
    service password-encryption
    no logging console
@@ -168,22 +169,22 @@ config t
       exec-timeout 0 0
    Int Fa 0/0
      no shutdown
-	 ip add 10._.100.8 255.255.255.0 
+	 ip add 10.42.100.8 255.255.255.0 
 	 end
    
 !!!CUCM ANALOG PHONES CONFIG
 configure terminal
 dial-peer voice 1 pots
-   destination-pattern 1200
+   destination-pattern 4200
    port 0/0/0
 dial-peer voice 2 pots
-   destination-pattern 1201
+   destination-pattern 4201
    port 0/0/1
 dial-peer voice 3 pots
-   destination-pattern 1202
+   destination-pattern 4202
    port 0/0/2
 dial-peer voice 4 pots
-   destination-pattern 1203
+   destination-pattern 4203
    port 0/0/3
 end
 
@@ -195,37 +196,37 @@ telephony-service
    no auto-reg-ephone
    max-ephones 5
    max-dn 20
-   ip source-address 10.12.100.8 port 2000
+   ip source-address 10.42.100.8 port 2000
    create cnf-files
 ephone-dn 1
-  number 1211
+  number 4211
 ephone-dn 2
-  number 1222
+  number 4222
 ephone-dn 3
-  number 1233
+  number 4233
 ephone-dn 4
-  number 1244
+  number 4244
 ephone-dn 5
-  number 1255
+  number 4255
 ephone-dn 6
-  number 1266
+  number 4266
 ephone-dn 7
-  number 1277
+  number 4277
 ephone-dn 8
-  number 1288
+  number 4288
  ephone-dn 9
-   number 1299
+   number 4231
 ephone-dn 10
- number 1298
+ number 4202
 Ephone 1
-  Mac-address ____.____.____
+  Mac-address 20bb.c0df.d297
   type 8945
-  button 1:8 2:7 3:6 4:5
+  button 1:8 2:7 3:6 4:9
   restart
 Ephone 2
-  Mac-address ____.____.____
+  Mac-address 204c.9e6c.8743
   type 8945
-  button 1:4 2:3 3:2 4:1
+  button 1:4 2:3 3:2 4:10
   restart  
 end
 
