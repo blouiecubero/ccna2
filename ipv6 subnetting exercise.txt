@@ -1,0 +1,212 @@
+Let's try another:
+
+abcd:babe:fade:f0f0::/64 to 22 offices (5 bits)
+
+Convert: 22 offices (5 bits)
+Add: /64 + /5 = /69
+Ichamba:
+
+1st office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 0  0 
+
+abcd:babe:fade:f0f0::/69
+
+2nd office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 0  1
+
+abcd:babe:fade:f0f0:0800::/69
+
+3rd office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 1  0
+
+abcd:babe:fade:f0f0:1000::/69
+
+4th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 1  1
+
+abcd:babe:fade:f0f0:1800::/69
+
+5th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 0  0
+
+abcd:babe:fade:f0f0:2000::/69
+
+6th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 0  1
+
+abcd:babe:fade:f0f0:2800::/69
+
+7th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 1  0
+
+abcd:babe:fade:f0f0:3000::/69
+
+8th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 1  1
+
+abcd:babe:fade:f0f0:3800::/69
+
+9th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 0 0  0
+
+abcd:babe:fade:f0f0:4000::/69
+
+10th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 0 0  1
+
+abcd:babe:fade:f0f0:4800::/69
+
+11th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 0 1  0
+
+abcd:babe:fade:f0f0:5000::/69
+
+12th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 0 1  1
+
+abcd:babe:fade:f0f0:5800::/69
+
+13th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 1 0  0
+
+abcd:babe:fade:f0f0:6000::/69
+
+14th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 1 0  1
+
+abcd:babe:fade:f0f0:6800::/69
+
+15th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 1 1  0
+
+abcd:babe:fade:f0f0:7000::/69
+
+16th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 1 1 1  1
+
+abcd:babe:fade:f0f0:7800::/69
+
+17th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+1 0 0 0  0
+
+abcd:babe:fade:f0f0:8000::/69
+
+18th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+1 0 0 0  1
+
+abcd:babe:fade:f0f0:8800::/69
+
+19th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+1 0 0 1  0
+
+abcd:babe:fade:f0f0:9000::/69
+
+20th office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+1 0 0 1  1
+
+abcd:babe:fade:f0f0:9800::/69
+
+21st office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+1 0 1 0  0
+
+abcd:babe:fade:f0f0:A000::/69
+
+22nd office
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+1 0 1 0  1
+
+abcd:babe:fade:f0f0:A800::/69
+
+
+
+! Implement
+
+conf t
+  ipv6 unicast-routing
+   int lo201
+     ipv6 add abcd:babe:fade:f0f0::1234/69
+   int lo202
+     ipv6 add abcd:babe:fade:f0f0:0800::1234/69
+   int lo203
+     ipv6 add abcd:babe:fade:f0f0:1000::1234/69
+   int lo204
+     ipv6 add abcd:babe:fade:f0f0:1800::1234/69
+   int lo205
+     ipv6 add abcd:babe:fade:f0f0:2000::1234/69
+   int lo206
+     ipv6 add abcd:babe:fade:f0f0:2800::1234/69
+   int lo207
+     ipv6 add abcd:babe:fade:f0f0:3000::1234/69
+   int lo208
+     ipv6 add abcd:babe:fade:f0f0:3800::1234/69
+   int lo209
+     ipv6 add abcd:babe:fade:f0f0:4000::1234/69
+   int lo210
+     ipv6 add abcd:babe:fade:f0f0:4800::1234/69
+   int lo211
+     ipv6 add abcd:babe:fade:f0f0:5000::1234/69
+   int lo212
+     ipv6 add abcd:babe:fade:f0f0:5800::1234/69
+   int lo213
+     ipv6 add abcd:babe:fade:f0f0:6000::1234/69
+   int lo214
+     ipv6 add abcd:babe:fade:f0f0:6800::1234/69
+   int lo215
+     ipv6 add abcd:babe:fade:f0f0:7000::1234/69
+   int lo216
+     ipv6 add abcd:babe:fade:f0f0:7800::1234/69
+   int lo217
+     ipv6 add abcd:babe:fade:f0f0:8000::1234/69
+   int lo218
+     ipv6 add abcd:babe:fade:f0f0:8800::1234/69
+   int lo219
+     ipv6 add abcd:babe:fade:f0f0:9000::1234/69
+   int lo220
+     ipv6 add abcd:babe:fade:f0f0:9800::1234/69
+   int lo221
+     ipv6 add abcd:babe:fade:f0f0:A000::1234/69
+   int lo222
+     ipv6 add abcd:babe:fade:f0f0:A800::1234/69
+end

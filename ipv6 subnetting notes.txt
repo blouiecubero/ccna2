@@ -1,0 +1,106 @@
+IP v6 subnetting:
+Rivan Method: CAI
+
+Given: Design the Accenture using face:cafe:fafa:fefe::64 to 60 offices 
+
+Convert MU PARIN: 50 offices = 6 bits
+
+ADD MO GAGO = /64 + /6 = /70
+
+IChamba mo Pattern:
+
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+
+1st office:
+
+dag dag mo 0 ng /6 na beses:
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 0  0 0 
+
+face:cafe:fafa:fefe::/70
+
+2nd office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 0  0 1 <- add 1 dito
+
+face:cafe:fafa:fefe:0400::/70
+
+3rd office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 0  1 0 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:0800::/70
+
+4th office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 0  1 1 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:0c00::/70
+
+5th office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 1  0 0 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:1000::/70
+
+6th office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 1  0 1 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:1400::/70
+
+7th office
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 1  1 0 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:1800::/70
+
+8th office 
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 0 1  1 1 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:1c00::/70
+
+9th office 
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 0  0 0 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:2000::/70
+
+10th office 
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 0  0 1 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:2400::/70
+
+11th office 
+8 4 2 1  8 4 2 1  8 4 2 1  8 4 2 1 
+0 0 1 0  1 0 <- add 1 ulit (in binary ha)
+
+face:cafe:fafa:fefe:2800::/70
+
+
+!Implement!!!!! lagay mo sa vEDGE sa vmware 
+conf t
+  ipv6 unicast-routing
+    int lo101
+      ipv6 add face:cafe:fafa:fefe::1234/70
+    int lo102
+      ipv6 add face:cafe:fafa:fefe:0400::1234/70
+    int lo103
+      ipv6 add face:cafe:fafa:fefe:0800::1234/70
+    int lo104
+      ipv6 add face:cafe:fafa:fefe:0c00::1234/70
+    int lo105
+      ipv6 add face:cafe:fafa:fefe:1000::1234/70
+    int lo106
+      ipv6 add face:cafe:fafa:fefe:1400::1234/70
+    int lo107
+      ipv6 add face:cafe:fafa:fefe:1800::1234/70
+    int lo108
+      ipv6 add face:cafe:fafa:fefe:1c00::1234/70
+    int lo109
+      ipv6 add face:cafe:fafa:fefe:2000::1234/70
+    int lo110
+      ipv6 add face:cafe:fafa:fefe:2400::1234/70
+end
