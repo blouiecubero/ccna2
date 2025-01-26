@@ -1,0 +1,56 @@
+RST Full routing:
+
+! First Prep: Setup DHCP for D1 and D2
+
+@D1
+
+conf t
+    ip dhcp excluded-add 10.2.1.1 10.2.1.99
+    ip dhcp excluded-add 10.2.1.200 10.2.1.254
+    ip dhcp pool vlan10
+        network 10.2.1.0 255.255.255.0
+        default-route 10.2.1.254 
+end
+
+@D2
+
+conf t
+    ip dhcp excluded-add 10.2.2.1 10.2.2.99
+    ip dhcp excluded-add 10.2.2.200 10.2.2.254
+    ip dhcp pool vlan20
+        network 10.2.2.0 255.255.255.0
+        default-route 10.2.2.254 
+end
+
+@A1
+
+conf t 
+    int e0/0
+        switchport mode access 
+        switchport access vlan 10
+end
+
+@A2
+
+conf t 
+    int e1/0
+        switchport mode access 
+        switchport access vlan 20
+end
+
+@P1 - nego for ip using dhcp
+
+conf t
+    int e0/0
+    ip add dhcp
+    no shut
+end
+
+@P2
+
+conf t
+    int e1/0
+    ip add dhcp
+    no shut
+end
+

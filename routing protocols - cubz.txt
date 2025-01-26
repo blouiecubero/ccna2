@@ -1,0 +1,290 @@
+CISCO ROUTING PROTOCOLS:
+
+Para maging master sa routing, dapat pakilala ka bilang IM.BODS!
+
+I - IS-IS (CCIE Level - common routing daw sa japan)
+M - MPLS (CCNP Level)
+. - ----> Boundaries mo muna below
+DYNAMIC ROUTING:
+
+B - BGP (CCNP Level talaga ito, pero hinahagingan na sa job requirement )
+O - OSPF (Open Shortest Path First)
+D - D'EIGRP (Enhanced Interior Gateway Routing Protocol)
+--------------------------
+STATIC ROUTING:
+
+S - Static
+S - Default Static (Stub Routing - gamit ng router sa bahay)
+
+Best practice before to configure routing, know the 2 rules of pingables:
+
+1. pag nagPING = DIKIT
+2. ROUTE NOT DIKIT
+
+C - CALYE
+L - LOTE
+
+! STATIC ROUTING
+recipe: ip route <hindi kadikit network IP> <hindi kadikit na submask> <HOST IP of Next HOP>
+
+@R4
+
+conf t
+    ip route 10.1.1.4 255.255.255.252 10.1.1.9
+    ip route 10.1.1.0 255.255.255.252 10.1.1.9
+end
+
+@R2 - introduce R2 to R4
+
+conf t
+    ip route 10.1.1.8 255.255.255.252 10.1.1.6
+end
+
+@R3 
+
+conf t 
+    ip route 10.1.1.0 255.255.255.252 10.1.1.5
+    do ping 10.1.1.1
+end
+
+@R1
+
+conf t
+    ip route 10.1.1.4 255.255.255.252 10.1.1.2
+    ip route 10.1.1.8 255.255.255.252 10.1.1.2
+end
+
+!delete routes
+conf t
+no ip routing
+ip routing
+end
+
+dynamic routing (EIGRP - OSPF - BGP)
+
+!Configure EIGRP
+(Enhanced Interior Gateway Routing Protocol)
+
+- Best dynamic routing protocol (of course since cisco owns it lolz)
+- Administrative Distance of 90
+- Cisco proprietary
+EIGRP States: Hello > Query > Update > Receive > Acknowledge
+
+@D1
+
+conf t 
+    router eigrp 100
+    no auto-summary
+    network 10.1.4.4 0.0.0.3
+    network 10.2.1.0 0.0.0.255
+    network 10.2.2.0 0.0.0.255
+    network 192.168.1.128 0.0.0.31
+end
+
+
+@D2
+conf t
+    router eigrp 100
+    no auto-summary
+    network 10.1.4.8 0.0.0.3
+    network 10.2.1.0 0.0.0.255
+    network 10.2.2.0 0.0.0.255
+    network 192.168.1.128 0.0.0.31
+end
+
+sh ip eigrp neighbor
+
+@R4
+conf t
+    router eigrp 100
+    no auto-summary
+    network 10.1.4.4 0.0.0.3 
+    network 10.1.1.8 0.0.0.3
+end
+
+sh ip protocols
+
+
+====================
+
+OSPF ROUTING
+
+- Multi Vendor Dynamic Routing Protocol
+- Link State Advertisement
+- Implements Djikstra Algorithm
+- Advertised by AREA (Area 0 is the backbone)
+OSPF States: Down > Init > Two-Way > EXSTART > EXCHANGE > LOADING > FULL
+
+@R4
+
+conf t
+    router ospf 1 
+        router-id 4.4.4.4 
+        network 10.1.1.8 0.0.0.3 area 34
+        network 4.4.4.4 0.0.0.0  area 34
+end
+
+@R3
+
+conf t
+    router ospf 1
+        router-id 3.3.3.3
+        network 10.1.1.8 0.0.0.3 area 34
+        network 10.1.1.4 0.0.0.3 area 0 
+        network 3.3.3.3 0.0.0.0 area 0
+end
+
+@R2
+
+conf t
+    router ospf 1
+        router-id 2.2.2.2
+        network 10.1.1.0 0.0.0.3 area 12
+        network 10.1.1.4 0.0.0.3 area 0
+        network 2.2.2.2 0.0.0.0 area 0
+end
+
+@R1
+conf t
+    router ospf 1
+        router-id 1.1.1.1
+        network 1.1.1.1 0.0.0.0 area 12
+        network 10.1.1.0 0.0.0.3 area 12
+end
+=============================
+
+BGP ROUTING
+
+- BORDER GATEWAY PROTOCOL
+- Mostly used for WAN
+- Also used by ISP and Large Corporations
+
+
+@R1
+
+conf t
+    router bgp 1
+    bgp log-neighbor-changes 
+    neighbor 208.8.8.4 remote-as 45 
+    neighbor 207.7.7.2 remote-as 2
+    neighbor 209.9.9.3 remote-as 3
+    network 208.8.8.0 mask 255.255.255.0
+    network 207.7.7.0 mask 255.255.255.0
+    network 209.9.9.0 mask 255.255.255.0
+    network 10.1.1.0 mask 255.255.255.252
+end
+
+@I1
+
+conf t
+    router bgp 45
+    bgp log-neighbor-changes 
+    neighbor 45.4.5.5 remote-as 45 
+    neighbor 24.2.4.2 remote-as 2
+    neighbor 208.8.8.1 remote-as 1
+    network 45.4.5.0 mask 255.255.255.0
+    network 24.2.4.0 mask 255.255.255.0
+    network 208.8.8.0 mask 255.255.255.0
+    network 44.44.44.44 mask 255.255.255.255
+!Pretend Internet
+    network 0.0.0.0 
+    ip route 0.0.0.0 0.0.0.0 null 0
+    ip route 10.0.0.0 255.0.0.0 208.8.8.1
+    ip route 192.168.0.0 255.255.0.0 207.7.7.1
+end
+
+@I2
+
+conf t
+    router bgp 2
+    bgp log-neighbor-changes 
+    neighbor 25.2.5.5 remote-as 45
+    neighbor 24.2.4.4 remote-as 45
+    neighbor 207.7.7.1 remote-as 1
+    neighbor 32.3.2.3 remote-as 3
+    network 25.2.5.0 mask 255.255.255.0
+    network 24.2.4.0 mask 255.255.255.0
+    network 207.7.7.0 mask 255.255.255.0
+    network 32.3.2.0 mask 255.255.255.0
+    network 22.22.22.22 mask 255.255.255.255
+!Pretend Internet
+    network 0.0.0.0 
+    ip route 0.0.0.0 0.0.0.0 null 0
+    ip route 10.0.0.0 255.0.0.0 208.8.8.1
+    ip route 192.168.0.0 255.255.0.0 207.7.7.1
+end
+
+@I3
+
+conf t
+    router bgp 3
+    bgp log-neighbor-changes
+    neighbor 35.3.5.5 remote-as 45
+    neighbor 32.3.2.2 remote-as 2
+    neighbor 209.9.9.1 remote-as 1
+    network 35.3.5.0 mask 255.255.255.0 
+    network 32.3.2.0 mask 255.255.255.0
+    network 209.9.9.0 mask 255.255.255.0
+    network 33.33.33.33 mask 255.255.255.255
+!Pretend Internet
+    network 0.0.0.0 
+    ip route 0.0.0.0 0.0.0.0 null 0
+    ip route 10.0.0.0 255.0.0.0 208.8.8.1
+    ip route 192.168.0.0 255.255.0.0 207.7.7.1
+end
+
+@I4
+conf t
+    int lo8
+        ip add 8.8.8.8 255.255.255.255
+        exit
+    router bgp 45
+    bgp log-neighbor-changes
+    neighbor 45.4.5.4 remote-as 45
+    neighbor 25.2.5.2 remote-as 2
+    neighbor 35.3.5.3 remote-as 3
+    network 45.4.5.0 mask 255.255.255.0
+    network 25.2.5.0 mask 255.255.255.0
+    network 35.3.5.0 mask 255.255.255.0
+    network 55.55.55.55 mask 255.255.255.255
+    network 8.8.8.8 mask 255.255.255.255
+end
+
+BGP Messages
+(NOKU Packets: Notification, Open, Keep-Alive, Update)
+
+clear ip bgp * soft !updates BGP Advertisment upon modification of BGP attributes
+
+ROUTE REDISTRIBUTION - Sya ung nagpapaconnect sa P1 to 8.8.8.8!
+(By default, differen routing protocols cannot get along with each other)
+
+@R1 (for BGP & OSPF)
+
+conf t
+    router ospf 1
+    default-information originate always
+end
+
+@R4 (for EIGRP & OSPF)
+
+conf t
+    ! pasok eigrp kay ospf
+    router ospf 1
+    redistribute eigrp 100 subnets
+    exit
+    ! pasok ospf kay eigrp (na matapobre)
+    router eigrp 100
+    redistribute ospf 1 metric 1544 2000 255 1 1500
+end
+
+@P1
+
+conf t
+    ip route 0.0.0.0 0.0.0.0 10.2.1.1
+end
+
+
+@P2
+conf t
+    ip route 0.0.0.0 0.0.0.0 10.2.2.2
+end
