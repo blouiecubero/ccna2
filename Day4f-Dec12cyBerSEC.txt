@@ -42,8 +42,8 @@ no logging console
 Int Gi 2
 no shut
 ip add 192.168.102.11 255.255.255.0
-@telnet use secureCRT: telnet 192.168.108.5
-in SEcureCRT, Paste This:
+!@telnet use secureCRT: telnet 192.168.108.5
+!in SEcureCRT, Paste This:
 config t
 IP ROUTE 0.0.0.0  0.0.0.0 208.8.8.2
 ip name-server 8.8.8.8 1.1.1.1
@@ -54,7 +54,7 @@ ip add 208.8.8.11 255.255.255.0
 int gi 3
 no shut
 ip add 192.168.103.11 255.255.255.0
-
+do sh ip int br
 
 ALL THE PORN SITES THE WORLD ARE OWNED BY 5 COMPANIES:
 
@@ -80,17 +80,17 @@ end
 
 Alternative: use standard ACL 1-99
 config t
-no access-list 69
-access-list 69 DENY 66.254.0.0 0.0.255.255
-access-list 69 DENY 104.21.0.0 0.0.255.255
-access-list 69 DENY 68.235.0.0 0.0.255.255
-access-list 69 DENY 104.17.0.0 0.0.255.255
-access-list 69 DENY 88.208.0.0 0.0.255.255
-access-list 69 DENY 208.77.0.0 0.0.255.255
-access-list 69 DENY 172.67.0.0 0.0.255.255
-access-list 69 permit Any
+no access-list 07
+access-list 07 DENY 66.254.0.0 0.0.255.255
+access-list 07 DENY 104.21.0.0 0.0.255.255
+access-list 07 DENY 68.235.0.0 0.0.255.255
+access-list 07 DENY 104.17.0.0 0.0.255.255
+access-list 07 DENY 88.208.0.0 0.0.255.255
+access-list 07 DENY 208.77.0.0 0.0.255.255
+access-list 07 DENY 172.67.0.0 0.0.255.255
+access-list 07 permit Any
 Int gi 1
- ip access-group 69 in
+ ip access-group 07 in
 end
 Goberno: allow all Porn, for freedom of expression!
 config t
@@ -104,19 +104,33 @@ ping www.dlsu.edu.ph 172.67.14.0   104.22.36.0
 ping www.ccp.edu.ph 50.6.160.0     
 ping www.feu.edu.ph 184.168.125.0  
 ping  www.ue.edu.ph 155.137.92.0  
-ping  www.yourschool.edu.ph = _________
+ping  www.feutech.edu.ph 202.57.37.90
 config t
 NO ip access-list standard NOISKUL
 ip access-list standard NOISKUL
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
+DENY   172.67.14.0   0.0.255.255
+DENY   50.6.160.0   0.0.255.255
+DENY   184.168.125.0     0.0.255.255
+DENY   155.137.92.0     0.0.255.255
+DENY   202.57.37.0   0.0.255.255
 Permit Any
 Int Gi 1
  ip access-group NOISKUL in
 end
+
+! convert to ACL number
+config t
+no access-list 08
+access-list 08 DENY 172.67.14.0 0.0.255.255
+access-list 08 DENY 50.6.160.0 0.0.255.255
+access-list 08 DENY 184.168.125.0 0.0.255.255
+access-list 08 DENY 155.137.92.0 0.0.255.255
+access-list 08 DENY 202.57.37.0 0.0.255.255
+access-list 08 permit Any
+Int gi 1
+ ip access-group 08 in
+end
+
 YOUR COMPANY IS HAS VERY LOW INTERNET SPEED, BEC OF TORRENTS:
 www.thepiratebay.org
 www.limetorrents.com
@@ -128,11 +142,10 @@ www.iptorrents.com
 config t
 NO ip access-list standard NOTORS
 ip access-list standard NOTORS
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
-DENY   __.__.__.__   0.0.255.255
+DENY   162.159.0.0   0.0.255.255
+DENY   104.21.0.0   0.0.255.255
+DENY   76.223.0.0   0.0.255.255
+DENY   172.67.0.0   0.0.255.255
 Permit Any
 Int Gi 1
  ip access-group NOTORS in
@@ -251,7 +264,7 @@ intentionally hackable websites
 
 task6: How to Make CISCOLINUX/ CUCM intentionally hackable to Learn
 the Basics for Firewalls.
-before: nmap -v 10.m.100.8,  C> nmap 
+before: nmap -v 10.42.100.8,  C> nmap 
 @Cucm: = fa 0/0/ or CSR1000v = gi3
 config t
 int Gi 3
@@ -267,15 +280,15 @@ ip http secure-server
 !Make Ping EASY
 ip host www.web310.com 192.168.103.10
 ip host www.web311.com 192.168.103.11
-ip host pc 10.m.1.10
-ip host cm 10.m.100.8
-ip host cm2 10.m.100.9
-ip host p1 10.m.100.101
-ip host p2 10.m.100.102
-ip host c6 10.m.50.6
-ip host c8 10.m.50.8
-ip host sw 10.m.1.4
-ip host ed 10.m.m.1
+ip host pc 10.42.1.10
+ip host cm 10.42.100.8
+ip host cm2 10.42.100.9
+ip host p1 10.42.100.101
+ip host p2 10.42.100.102
+ip host c6 10.42.50.6
+ip host c8 10.42.50.8
+ip host sw 10.42.1.4
+ip host ed 10.42.42.1
 
 TASK7: Enter the World of BlueTeam: Protect vs Redteam: Attack, 
 BlueTeam: UTM: unified Threat management:
@@ -297,9 +310,10 @@ www.web311.com open only dns, https, ssh       ==> 6 lines:
    protocol         hacker    victim       port
 tcp,udp,icmp,IP     Any      web310/11
 Config t
+!SUMBUNGAN NG BAYAN
 service timestamps log datetime
 service timestamps debug datetime
-logging 10.m.1.10
+logging 10.42.1.10
 logging trap 5
 NO IP access-list Extended FWP1
 IP access-list Extended FWP1
@@ -325,21 +339,37 @@ www.web311.com open only telnet, ssh, https, ping/icmp => 7lines
   GOLDEN  FIREWALL FORMULA:  paloalto,fortinet,cisco,checkpoint.
    protocol         hacker    victim       port
 config t
-NO IP access-list Extended FWP2
-IP access-list Extended FWP2
- Permit tcp Any host www.web310.com eq __ log
- Permit tcp Any host www.web310.com eq __ log
- Permit tcp Any host www.web310.com eq __ log
- Permit tcp Any host www.web311.com eq __ log
- Permit tcp Any host www.web311.com eq __ log
- Permit tcp Any host www.web311.com eq __ log 
- Permit ___  Any host www.web311.com log
+NO IP access-list Extended WAF2
+IP access-list Extended WAF2
+ Permit tcp Any host www.web310.com eq 22 log
+ Permit tcp Any host www.web310.com eq 53 log
+ Permit tcp Any host www.web310.com eq 80 log
+ Permit tcp Any host www.web311.com eq 23 log
+ Permit tcp Any host www.web311.com eq 22 log
+ Permit tcp Any host www.web311.com eq 443 log 
+ Permit icmp  Any host www.web311.com log
  Int Gi 3
-  ip access-group FWP2 in
+  ip access-group WAF2 in
 REMOVE FIREWALL:
 CONfig t
  Int Gi 3
-  ip access-group FWP2 in
+  ip access-group WAF2 in
+end
+
+! WAF3
+config t
+NO IP access-list Extended WAF3
+IP access-list Extended WAF3
+ Permit tcp Any host www.web310.com eq 22 log
+ Permit tcp Any host www.web310.com eq 80 log
+ Permit tcp Any host www.web311.com eq 443 log 
+ Permit icmp  Any host www.web311.com log
+ Int Gi 3
+  ip access-group WAF3 in
+REMOVE FIREWALL:
+CONfig t
+ Int Gi 3
+  no ip access-group WAF3 in
 end
 
 ex.3: you are the admin for SUPERPRANING pogo sites:
@@ -348,8 +378,8 @@ www.web311.com open only ping
 config t
 NO IP access-list Extended PRANING3
 IP access-list Extended PRANING3
- Permit tcp Any host www.web310.com eq __ log
- Permit ___  Any host www.web311.com log
+ Permit tcp Any host www.web310.com eq 443 log
+ Permit icmp  Any host www.web311.com log
 Int Gi 3
   ip access-group PRANING3 in
 
@@ -361,17 +391,17 @@ formula:       PROTOCOL    HACKER    VICTIM     PORT:
 config t
 no ip access-list extended Policy1
 ip access-list extended Policy1
-Permit tcp any host www.web8.com eq 80 log
-Permit tcp any host www.web8.com eq 443 log
-Permit tcp any host www.web9.com eq 22 log
-Permit tcp any  host www.web9.com eq 53 log
+Permit tcp any host www.web310.com eq 80 log
+Permit tcp any host www.web310.com eq 443 log
+Permit tcp any host www.web311.com eq 22 log
+Permit tcp any  host www.web311.com eq 53 log
 Interface Gi 3
  ip access-group Policy1 in
  do sh ip access-list Policy1
 
 EX.2 CREATE A FIREWALL POLICY NAMED PROWEBAPP2 TO OPEN
-WWW.WEB8.COM HAS HTTPS,PING AS OPEN
-WWW.WEB9.COM HAS HTTPS,PING OPEN
+WWW.WEB310.COM HAS HTTPS,PING AS OPEN
+WWW.WEB311.COM HAS HTTPS,PING OPEN
 formula:       PROTOCOL      HACKER      VICTIM       PORT:
        tcp, udp, icmp, IP    any       web8,web9
 Ports: 
@@ -388,8 +418,10 @@ Ports:
 config t
 no ip access-list extended PROWEBAPP2
 ip access-list extended PROWEBAPP2
-Permit tcp any host www.web8.com eq ___ log
-Permit tcp any host www.web9.com eq ___ log
+Permit tcp any host www.web310.com eq 443 log
+Permit icmp any host www.web310.com log
+Permit tcp any host www.web311.com eq 53 log
+Permit icmp any host www.web311.com log
 Interface Gi 3
  ip access-group PROWEBAPP2 in
  do sh ip access-list PROWEBAPP1
@@ -467,6 +499,11 @@ config t
 ntp server 216.239.35.8
 end
 show ntp associations
+
+!How to make Cisco device a time master? Taga bigay ng oras?
+ntp master 1
+ntp update-calendar
+
 GIVE IP ADDRESS TO LINUX BLDGONE AND BLDGTWO:
 sudo su
 bldg1:
